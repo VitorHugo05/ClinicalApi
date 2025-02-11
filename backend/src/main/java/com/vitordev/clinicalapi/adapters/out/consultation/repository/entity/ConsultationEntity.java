@@ -5,7 +5,8 @@ import com.vitordev.clinicalapi.adapters.out.doctor.repository.entity.DoctorEnti
 import com.vitordev.clinicalapi.adapters.out.patient.repository.entity.PatientEntity;
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_consultation")
@@ -22,7 +23,9 @@ public class ConsultationEntity {
     @JoinColumn(name = "patient_id", nullable = false)
     private PatientEntity patient;
 
-    private Date date;
+    private LocalDateTime startAt;
+    private LocalDateTime endAt;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private StatusConsultationEntity status;
