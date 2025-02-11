@@ -3,6 +3,7 @@ package com.vitordev.clinicalapi.adapters.in.controllers;
 import com.vitordev.clinicalapi.adapters.in.mapper.DoctorMapper;
 import com.vitordev.clinicalapi.adapters.in.requests.DoctorRequest;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
+import com.vitordev.clinicalapi.application.ports.in.DeleteDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.FindDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.InsertDoctorInputPort;
 import com.vitordev.clinicalapi.application.ports.in.UpdateDoctorInputPort;
@@ -26,6 +27,9 @@ public class DoctorController {
     @Autowired
     private UpdateDoctorInputPort updateDoctorInputPort;
 
+    @Autowired
+    DeleteDoctorByIdInputPort deleteDoctorByIdInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody DoctorRequest doctorRequest) {
         Doctor doctor = doctorMapper.toDoctor(doctorRequest);
@@ -44,6 +48,12 @@ public class DoctorController {
         Doctor doctor = doctorMapper.toDoctor(doctorRequest);
         doctor.setId(id);
         updateDoctorInputPort.update(doctor);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deleteDoctorByIdInputPort.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -5,7 +5,7 @@ import com.vitordev.clinicalapi.application.ports.in.FindDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.out.FindDoctorByIdOutputPort;
 
 public class FindDoctorByIdUseCase implements FindDoctorByIdInputPort {
-    private FindDoctorByIdOutputPort findDoctorByIdOutputPort;
+    private final FindDoctorByIdOutputPort findDoctorByIdOutputPort;
 
     public FindDoctorByIdUseCase(FindDoctorByIdOutputPort findDoctorByIdOutputPort) {
         this.findDoctorByIdOutputPort = findDoctorByIdOutputPort;
