@@ -28,6 +28,10 @@ public class Consultation {
         this.status = status;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
     public LocalDateTime getStartAt() {
         return startAt;
     }
