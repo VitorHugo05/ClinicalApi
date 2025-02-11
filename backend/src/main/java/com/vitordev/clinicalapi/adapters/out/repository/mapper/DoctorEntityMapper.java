@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 
 
 @Mapper(componentModel = "spring")
-public interface DoctorEntityMapping {
+public interface DoctorEntityMapper {
     DoctorEntity toDoctorEntity(Doctor doctor);
     Doctor toDoctor (DoctorEntity doctorEntity);
 }

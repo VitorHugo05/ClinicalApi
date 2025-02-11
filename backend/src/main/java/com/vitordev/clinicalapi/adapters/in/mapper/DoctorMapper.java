@@ -9,5 +9,5 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface DoctorMapper {
     @Mapping(target = "id", ignore = true)
-    Doctor toDoctorRequest(DoctorRequest doctorRequest);
+    Doctor toDoctor(DoctorRequest doctorRequest);
 }
