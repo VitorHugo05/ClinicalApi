@@ -6,6 +6,8 @@ import com.vitordev.clinicalapi.adapters.out.patient.FindPatientByIdAdapter;
 import com.vitordev.clinicalapi.application.core.domain.Patient;
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.InsertPatientInputPort;
+import com.vitordev.clinicalapi.application.ports.in.patient.UpdatePatientInputPort;
+import com.vitordev.clinicalapi.application.ports.out.patient.UpdatePatientOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,9 @@ public class PatientController {
     @Autowired
     private FindPatientByIdInputPort findPatientByIdInputPort;
 
+    @Autowired
+    private UpdatePatientInputPort updatePatientInputPort;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody PatientRequest patientRequest) {
         var patient = patientMapper.toPatient(patientRequest);
@@ -33,5 +38,13 @@ public class PatientController {
     public ResponseEntity<Patient> findById(@PathVariable Long id) {
         var patient = findPatientByIdInputPort.find(id);
         return ResponseEntity.ok().body(patient);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody PatientRequest patientRequest) {
+        var patient = patientMapper.toPatient(patientRequest);
+        patient.setId(id);
+        updatePatientInputPort.update(patient);
+        return ResponseEntity.ok().build();
     }
 }
