@@ -1,18 +1,26 @@
 package com.vitordev.clinicalapi.application.core.domain;
 
+import java.util.List;
+
 public class Patient {
     private Long id;
     private String name;
     private String email;
     private String phone;
+    private List<Consultation> consultations;
 
     public Patient() {}
 
-    public Patient(Long id, String name, String email, String phone) {
+    public Patient(Long id, String name, String email, String phone, List<Consultation> consultations) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.consultations = consultations;
+    }
+
+    public List<Consultation> getConsultations() {
+        return consultations;
     }
 
     public Long getId() {

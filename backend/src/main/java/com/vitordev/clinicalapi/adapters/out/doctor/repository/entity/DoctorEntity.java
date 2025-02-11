@@ -1,7 +1,11 @@
 package com.vitordev.clinicalapi.adapters.out.doctor.repository.entity;
 
+import com.vitordev.clinicalapi.adapters.out.consultation.repository.entity.ConsultationEntity;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -15,4 +19,7 @@ public class DoctorEntity {
     private String email;
     private String phone;
     private String specialty;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<ConsultationEntity> consultations = new ArrayList<>();
 }

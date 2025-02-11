@@ -1,5 +1,7 @@
 package com.vitordev.clinicalapi.application.core.domain;
 
+import com.vitordev.clinicalapi.application.core.domain.enums.StatusConsultation;
+
 import java.util.Date;
 
 public class Consultation {
@@ -7,14 +9,24 @@ public class Consultation {
     private Doctor doctor;
     private Patient patient;
     private Date date;
+    private StatusConsultation status;
 
     public Consultation() {}
 
-    public Consultation(Long id, Doctor doctor, Patient patient, Date date) {
+    public Consultation(Long id, Doctor doctor, Patient patient, Date date, StatusConsultation status) {
         this.id = id;
         this.doctor = doctor;
         this.patient = patient;
         this.date = date;
+        this.status = status;
+    }
+
+    public StatusConsultation getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusConsultation status) {
+        this.status = status;
     }
 
     public Long getId() {
