@@ -1,6 +1,6 @@
-package com.vitordev.clinicalapi.adapters.out.repository.mapper;
+package com.vitordev.clinicalapi.adapters.out.doctor.repository.mapper;
 
-import com.vitordev.clinicalapi.adapters.out.repository.entity.DoctorEntity;
+import com.vitordev.clinicalapi.adapters.out.doctor.repository.entity.DoctorEntity;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
 import org.mapstruct.Mapper;
 

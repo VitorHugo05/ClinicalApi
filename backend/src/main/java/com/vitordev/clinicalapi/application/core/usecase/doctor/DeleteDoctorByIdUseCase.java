@@ -1,9 +1,8 @@
-package com.vitordev.clinicalapi.application.core.usecase;
+package com.vitordev.clinicalapi.application.core.usecase.doctor;
 
-import com.vitordev.clinicalapi.application.core.domain.Doctor;
-import com.vitordev.clinicalapi.application.ports.in.DeleteDoctorByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.in.FindDoctorByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.out.DeleteDoctorByIdOutputPort;
+import com.vitordev.clinicalapi.application.ports.in.doctor.DeleteDoctorByIdInputPort;
+import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
+import com.vitordev.clinicalapi.application.ports.out.doctor.DeleteDoctorByIdOutputPort;
 
 public class DeleteDoctorByIdUseCase implements DeleteDoctorByIdInputPort {
 

@@ -1,8 +1,8 @@
-package com.vitordev.clinicalapi.application.core.usecase;
+package com.vitordev.clinicalapi.application.core.usecase.doctor;
 
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
-import com.vitordev.clinicalapi.application.ports.in.FindDoctorByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.out.FindDoctorByIdOutputPort;
+import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
+import com.vitordev.clinicalapi.application.ports.out.doctor.FindDoctorByIdOutputPort;
 
 public class FindDoctorByIdUseCase implements FindDoctorByIdInputPort {
     private final FindDoctorByIdOutputPort findDoctorByIdOutputPort;

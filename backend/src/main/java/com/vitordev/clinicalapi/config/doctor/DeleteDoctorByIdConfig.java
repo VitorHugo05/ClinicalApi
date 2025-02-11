@@ -1,8 +1,8 @@
-package com.vitordev.clinicalapi.config;
+package com.vitordev.clinicalapi.config.doctor;
 
-import com.vitordev.clinicalapi.application.core.usecase.DeleteDoctorByIdUseCase;
-import com.vitordev.clinicalapi.application.ports.in.FindDoctorByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.out.DeleteDoctorByIdOutputPort;
+import com.vitordev.clinicalapi.application.core.usecase.doctor.DeleteDoctorByIdUseCase;
+import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
+import com.vitordev.clinicalapi.application.ports.out.doctor.DeleteDoctorByIdOutputPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

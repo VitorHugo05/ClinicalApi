@@ -1,4 +1,4 @@
-package com.vitordev.clinicalapi.adapters.out.repository.entity;
+package com.vitordev.clinicalapi.adapters.out.doctor.repository.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

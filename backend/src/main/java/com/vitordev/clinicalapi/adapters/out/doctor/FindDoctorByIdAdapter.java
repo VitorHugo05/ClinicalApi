@@ -1,9 +1,9 @@
-package com.vitordev.clinicalapi.adapters.out;
+package com.vitordev.clinicalapi.adapters.out.doctor;
 
-import com.vitordev.clinicalapi.adapters.out.repository.DoctorRepository;
-import com.vitordev.clinicalapi.adapters.out.repository.mapper.DoctorEntityMapper;
+import com.vitordev.clinicalapi.adapters.out.doctor.repository.DoctorRepository;
+import com.vitordev.clinicalapi.adapters.out.doctor.repository.mapper.DoctorEntityMapper;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
-import com.vitordev.clinicalapi.application.ports.out.FindDoctorByIdOutputPort;
+import com.vitordev.clinicalapi.application.ports.out.doctor.FindDoctorByIdOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
