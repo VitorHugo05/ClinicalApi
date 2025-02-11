@@ -4,16 +4,17 @@ import com.vitordev.clinicalapi.adapters.out.consultation.repository.Consultatio
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.entity.ConsultationEntity;
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.mapper.ConsultationEntityMapper;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
-import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultationsByDoctorIdOutputPort;
+import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultationsByDoctorIdAndDateOutputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
-public class FindConsultationByDoctorIdAdapter implements FindConsultationsByDoctorIdOutputPort {
-
+public class FindConsultationByDoctorIdAndDateAdapter implements FindConsultationsByDoctorIdAndDateOutputPort {
     @Autowired
     private ConsultationRepository consultationRepository;
 
@@ -21,12 +22,12 @@ public class FindConsultationByDoctorIdAdapter implements FindConsultationsByDoc
     private ConsultationEntityMapper consultationEntityMapper;
 
     @Override
-    public List<Consultation> find(Long id) {
-        List<ConsultationEntity> consultationEntities = consultationRepository.findByDoctorId(id)
-                .orElseThrow(() -> new RuntimeException("not found"));
+    public List<Consultation> find(Long id, LocalDate date) {
+        List<ConsultationEntity> consultationEntityList = consultationRepository.findByDoctorIdAndDateEquals(id, date)
+                .orElseThrow(() -> new RuntimeException("Consultation not found"));
 
-        return consultationEntities.stream()
-                .map(consultationEntityMapper::toConsultation)
+        return consultationEntityList.stream()
+                .map(x -> consultationEntityMapper.toConsultation(x))
                 .toList();
     }
 }
