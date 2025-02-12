@@ -14,4 +14,5 @@ public interface ConsultationRepository extends JpaRepository<ConsultationEntity
     Optional<List<ConsultationEntity>> findByDoctorId(Long id);
     Optional<List<ConsultationEntity>> findByPatientId(Long id);
     Optional<List<ConsultationEntity>> findByDoctorIdAndDateEquals(Long doctorId, LocalDate date);
+    Optional<List<ConsultationEntity>> findByPatientIdAndDateEquals(Long doctorId, LocalDate date);
 }

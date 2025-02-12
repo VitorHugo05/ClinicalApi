@@ -5,6 +5,7 @@ import com.vitordev.clinicalapi.adapters.in.response.ConsultationResponse;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
 import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByDoctorIdAndDateInputPort;
 import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByDoctorIdInputPort;
+import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByPatientIdAndDateInputPort;
 import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByPatientIdInputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class ConsultationController {
     @Autowired
     private FindConsultationsByDoctorIdAndDateInputPort findConsultationsByDoctorIdAndDateInputPort;
 
+    @Autowired
+    private FindConsultationsByPatientIdAndDateInputPort findConsultationsByPatientIdAndDateInputPort;
+
     @GetMapping("/doctor/{id}")
     public ResponseEntity<List<ConsultationResponse>> findByDoctor(@PathVariable Long id) {
         List<Consultation> consultationList = findConsultationsByDoctorIdInputPort.find(id);
@@ -46,9 +50,18 @@ public class ConsultationController {
     }
 
     @GetMapping("/doctor/{id}/date")
-    public ResponseEntity<List<ConsultationResponse>> findByDoctorId(@PathVariable Long id, @RequestParam("date") String date) {
+    public ResponseEntity<List<ConsultationResponse>> findByDoctorIdAndDate(@PathVariable Long id, @RequestParam("date") String date) {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         List<Consultation> consultationList = findConsultationsByDoctorIdAndDateInputPort.find(id, localDate);
+        List<ConsultationResponse> consultationResponseList = consultationList.stream()
+                .map(x -> consultationResponseMapper.toResponse(x)).toList();
+        return ResponseEntity.ok(consultationResponseList);
+    }
+
+    @GetMapping("/patient/{id}/date")
+    public ResponseEntity<List<ConsultationResponse>> findByPatientIdAndDate(@PathVariable Long id, @RequestParam("date") String date) {
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        List<Consultation> consultationList = findConsultationsByPatientIdAndDateInputPort.find(id, localDate);
         List<ConsultationResponse> consultationResponseList = consultationList.stream()
                 .map(x -> consultationResponseMapper.toResponse(x)).toList();
         return ResponseEntity.ok(consultationResponseList);
