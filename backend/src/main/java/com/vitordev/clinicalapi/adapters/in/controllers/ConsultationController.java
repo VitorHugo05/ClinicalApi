@@ -19,6 +19,9 @@ public class ConsultationController {
     private ConsultationResponseMapper consultationResponseMapper;
 
     @Autowired
+    private DeleteConsultationByIdInputPort deleteConsultationByIdInputPort;
+
+    @Autowired
     private FindConsultationByIdInputPort findConsultationByIdInputPort;
 
     @Autowired
@@ -72,5 +75,11 @@ public class ConsultationController {
         Consultation consultation = findConsultationByIdInputPort.find(id);
         ConsultationResponse consultationResponse = consultationResponseMapper.toResponse(consultation);
         return ResponseEntity.ok(consultationResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        deleteConsultationByIdInputPort.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
