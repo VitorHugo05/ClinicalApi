@@ -1,4 +1,4 @@
-package com.vitordev.clinicalapi.adapters.in.response;
+package com.vitordev.clinicalapi.adapters.in.requests;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vitordev.clinicalapi.application.core.domain.enums.StatusConsultation;
@@ -8,10 +8,9 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
-public class ConsultationResponse {
-    private Long id;
-    private DoctorDTO doctor;
-    private PatientDTO patient;
+public class ConsultationRequest {
+    private DoctorRequest doctor;
+    private PatientRequest patient;
 
     @JsonFormat(pattern = "HH:mm:ss")
     private LocalTime startAt;

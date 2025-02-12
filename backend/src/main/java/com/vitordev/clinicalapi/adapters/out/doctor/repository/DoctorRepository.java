@@ -4,6 +4,9 @@ import com.vitordev.clinicalapi.adapters.out.doctor.repository.entity.DoctorEnti
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
+    Optional<DoctorEntity> findByName(String name);
 }

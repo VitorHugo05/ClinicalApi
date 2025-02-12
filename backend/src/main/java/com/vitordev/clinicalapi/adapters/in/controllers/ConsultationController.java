@@ -1,9 +1,15 @@
 package com.vitordev.clinicalapi.adapters.in.controllers;
 
 import com.vitordev.clinicalapi.adapters.in.mapper.ConsultationResponseMapper;
+import com.vitordev.clinicalapi.adapters.in.requests.ConsultationRequest;
 import com.vitordev.clinicalapi.adapters.in.response.ConsultationResponse;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
+import com.vitordev.clinicalapi.application.core.domain.Doctor;
+import com.vitordev.clinicalapi.application.core.domain.Patient;
+import com.vitordev.clinicalapi.application.core.domain.enums.StatusConsultation;
 import com.vitordev.clinicalapi.application.ports.in.consultation.*;
+import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByNameInputPort;
+import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByNameInputPort;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +21,18 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/consultation")
 public class ConsultationController {
+
+    @Autowired
+    private FindPatientByNameInputPort findPatientByNameInputPort;
+
+    @Autowired
+    private FindDoctorByNameInputPort findDoctorByNameInputPort;
+
     @Autowired
     private ConsultationResponseMapper consultationResponseMapper;
+
+    @Autowired
+    private InsertConsultationInputPort insertConsultationInputPort;
 
     @Autowired
     private DeleteConsultationByIdInputPort deleteConsultationByIdInputPort;
@@ -81,5 +97,20 @@ public class ConsultationController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         deleteConsultationByIdInputPort.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> insert(@RequestBody ConsultationRequest consultationRequest) {
+        Consultation consultation = consultationResponseMapper.toRequest(consultationRequest);
+
+        Doctor doctor = findDoctorByNameInputPort.find(consultationRequest.getDoctor().getName());
+        Patient patient = findPatientByNameInputPort.find(consultationRequest.getPatient().getName());
+
+        consultation.setStatus(StatusConsultation.APPOINTMENT);
+        consultation.setDoctor(doctor);
+        consultation.setPatient(patient);
+
+        insertConsultationInputPort.insert(consultation);
+        return ResponseEntity.status(201).build();
     }
 }

@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -30,10 +31,10 @@ public class ConsultationEntity {
     private PatientEntity patient;
 
     @JsonManagedReference
-    private LocalDateTime startAt;
+    private LocalTime startAt;
 
     @JsonManagedReference
-    private LocalDateTime endAt;
+    private LocalTime endAt;
 
     @JsonManagedReference
     private LocalDate date;
