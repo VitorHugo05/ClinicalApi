@@ -13,10 +13,10 @@ public class ConsultationResponse {
     private DoctorDTO doctor;
     private PatientDTO patient;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalDateTime startAt;
 
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    @JsonFormat(pattern = "HH:mm:ss")
     private LocalDateTime endAt;
 
     @JsonFormat(pattern = "dd/MM/yyyy")

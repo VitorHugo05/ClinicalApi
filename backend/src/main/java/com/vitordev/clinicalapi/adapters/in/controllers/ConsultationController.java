@@ -3,10 +3,7 @@ package com.vitordev.clinicalapi.adapters.in.controllers;
 import com.vitordev.clinicalapi.adapters.in.mapper.ConsultationResponseMapper;
 import com.vitordev.clinicalapi.adapters.in.response.ConsultationResponse;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
-import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByDoctorIdAndDateInputPort;
-import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByDoctorIdInputPort;
-import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByPatientIdAndDateInputPort;
-import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByPatientIdInputPort;
+import com.vitordev.clinicalapi.application.ports.in.consultation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +17,9 @@ import java.util.List;
 public class ConsultationController {
     @Autowired
     private ConsultationResponseMapper consultationResponseMapper;
+
+    @Autowired
+    private FindConsultationByIdInputPort findConsultationByIdInputPort;
 
     @Autowired
     private FindConsultationsByDoctorIdInputPort findConsultationsByDoctorIdInputPort;
@@ -65,5 +65,12 @@ public class ConsultationController {
         List<ConsultationResponse> consultationResponseList = consultationList.stream()
                 .map(x -> consultationResponseMapper.toResponse(x)).toList();
         return ResponseEntity.ok(consultationResponseList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ConsultationResponse> findById(@PathVariable Long id) {
+        Consultation consultation = findConsultationByIdInputPort.find(id);
+        ConsultationResponse consultationResponse = consultationResponseMapper.toResponse(consultation);
+        return ResponseEntity.ok(consultationResponse);
     }
 }
