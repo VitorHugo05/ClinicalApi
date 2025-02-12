@@ -1,7 +1,9 @@
 package com.vitordev.clinicalapi.adapters.in.controllers;
 
 import com.vitordev.clinicalapi.adapters.in.mapper.ConsultationResponseMapper;
+import com.vitordev.clinicalapi.adapters.in.mapper.ConsultationUpdateMapper;
 import com.vitordev.clinicalapi.adapters.in.requests.ConsultationRequest;
+import com.vitordev.clinicalapi.adapters.in.requests.ConsultationUpdateRequest;
 import com.vitordev.clinicalapi.adapters.in.response.ConsultationResponse;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
@@ -51,6 +53,8 @@ public class ConsultationController {
 
     @Autowired
     private FindConsultationsByPatientIdAndDateInputPort findConsultationsByPatientIdAndDateInputPort;
+    @Autowired
+    private ConsultationUpdateMapper consultationUpdateMapper;
 
     @GetMapping("/doctor/{id}")
     public ResponseEntity<List<ConsultationResponse>> findByDoctor(@PathVariable Long id) {
@@ -101,7 +105,7 @@ public class ConsultationController {
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody ConsultationRequest consultationRequest) {
-        Consultation consultation = consultationResponseMapper.toRequest(consultationRequest);
+        Consultation consultation = consultationResponseMapper.toConsultation(consultationRequest);
 
         Doctor doctor = findDoctorByNameInputPort.find(consultationRequest.getDoctor().getName());
         Patient patient = findPatientByNameInputPort.find(consultationRequest.getPatient().getName());
@@ -112,5 +116,18 @@ public class ConsultationController {
 
         insertConsultationInputPort.insert(consultation);
         return ResponseEntity.status(201).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ConsultationUpdateRequest consultationRequest) {
+        Consultation oldConsultation = findConsultationByIdInputPort.find(id);
+        Consultation consultation = consultationUpdateMapper.toConsultation(consultationRequest);
+
+        consultation.setId(id);
+        consultation.setDoctor(oldConsultation.getDoctor());
+        consultation.setPatient(oldConsultation.getPatient());
+
+        insertConsultationInputPort.insert(consultation);
+        return ResponseEntity.noContent().build();
     }
 }

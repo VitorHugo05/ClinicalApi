@@ -16,5 +16,5 @@ public interface ConsultationResponseMapper {
     @Mapping(target = "doctor", ignore = true)
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "status", ignore = true)
-    Consultation toRequest(ConsultationRequest consultationRequest);
+    Consultation toConsultation(ConsultationRequest consultationRequest);
 }

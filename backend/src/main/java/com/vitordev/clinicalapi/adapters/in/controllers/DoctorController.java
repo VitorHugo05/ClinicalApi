@@ -45,6 +45,7 @@ public class DoctorController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody DoctorRequest doctorRequest) {
+        findDoctorByIdInputPort.find(id);
         Doctor doctor = doctorMapper.toDoctor(doctorRequest);
         doctor.setId(id);
         updateDoctorInputPort.update(doctor);
