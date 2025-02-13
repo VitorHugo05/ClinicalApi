@@ -4,10 +4,8 @@ import com.vitordev.clinicalapi.adapters.in.mapper.PatientDtoMapper;
 import com.vitordev.clinicalapi.adapters.in.mapper.PatientMapper;
 import com.vitordev.clinicalapi.adapters.in.requests.PatientRequest;
 import com.vitordev.clinicalapi.adapters.in.response.PatientDTO;
-import com.vitordev.clinicalapi.application.core.domain.Patient;
 import com.vitordev.clinicalapi.application.ports.in.patient.DeletePatientByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.in.patient.InsertPatientInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.UpdatePatientInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +19,6 @@ public class PatientController {
     private PatientMapper patientMapper;
 
     @Autowired
-    private InsertPatientInputPort insertPatientInputPort;
-
-    @Autowired
     private FindPatientByIdInputPort findPatientByIdInputPort;
 
     @Autowired
@@ -34,13 +29,6 @@ public class PatientController {
 
     @Autowired
     private PatientDtoMapper patientDtoMapper;
-
-    @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody @Valid PatientRequest patientRequest) {
-        var patient = patientMapper.toPatient(patientRequest);
-        insertPatientInputPort.insert(patient);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<PatientDTO> findById(@PathVariable Long id) {

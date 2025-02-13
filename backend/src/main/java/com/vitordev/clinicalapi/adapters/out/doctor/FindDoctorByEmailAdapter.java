@@ -7,7 +7,7 @@ import com.vitordev.clinicalapi.application.ports.out.doctor.FindDoctorByEmailOu
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FindDoctorByEmailAdapter implements FindDoctorByEmailOutputPort {
@@ -18,9 +18,7 @@ public class FindDoctorByEmailAdapter implements FindDoctorByEmailOutputPort {
     private DoctorEntityMapper doctorEntityMapper;
 
     @Override
-    public List<Doctor> find(String email) {
-        return doctorRepository.findByEmail(email).stream()
-                .map(x -> doctorEntityMapper.toDoctor(x))
-                .toList();
+    public Optional<Doctor> find(String email) {
+        return doctorRepository.findByEmail(email).map(x -> doctorEntityMapper.toDoctor(x));
     }
 }

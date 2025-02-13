@@ -18,8 +18,9 @@ public class InsertPatientAdapter implements InsertPatientOutputPort {
     private PatientEntityMapper patientEntityMapper;
 
     @Override
-    public void insert(Patient patient) {
+    public Patient insert(Patient patient) {
         PatientEntity patientEntity = patientEntityMapper.toPatientEntity(patient);
-        patientRepository.save(patientEntity);
+        var patientResponse = patientRepository.save(patientEntity);
+        return patientEntityMapper.toPatient(patientResponse);
     }
 }

@@ -20,10 +20,9 @@ public class InsertDoctorUseCase implements InsertDoctorInputPort {
 
     @Override
     public Doctor insert(Doctor doctor) {
-        System.out.println(findDoctorByEmailOutputPort.find(doctor.getEmail()));
-        if(!findDoctorByEmailOutputPort.find(doctor.getEmail()).isEmpty()) {
+        if(findDoctorByEmailOutputPort.find(doctor.getEmail()).isPresent()) {
             throw new DataAlreadyExistException("Doctor already exists");
-        };
+        }
         return insertDoctorOutputPort.insert(doctor);
     }
 }
