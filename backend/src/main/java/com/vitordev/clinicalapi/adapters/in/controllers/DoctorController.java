@@ -1,7 +1,9 @@
 package com.vitordev.clinicalapi.adapters.in.controllers;
 
+import com.vitordev.clinicalapi.adapters.in.mapper.DoctorDtoMapper;
 import com.vitordev.clinicalapi.adapters.in.mapper.DoctorMapper;
 import com.vitordev.clinicalapi.adapters.in.requests.DoctorRequest;
+import com.vitordev.clinicalapi.adapters.in.response.DoctorDTO;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
 import com.vitordev.clinicalapi.application.ports.in.doctor.DeleteDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
@@ -17,6 +19,9 @@ import org.springframework.web.bind.annotation.*;
 public class DoctorController {
     @Autowired
     private DoctorMapper doctorMapper;
+
+    @Autowired
+    private DoctorDtoMapper doctorDtoMapper;
 
     @Autowired
     private InsertDoctorInputPort insertDoctorInputPort;
@@ -38,9 +43,9 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> findById(@PathVariable Long id) {
+    public ResponseEntity<DoctorDTO> findById(@PathVariable Long id) {
         var doctor = findDoctorByIdInputPort.find(id);
-        return ResponseEntity.ok().body(doctor);
+        return ResponseEntity.ok().body(doctorDtoMapper.toDTO(doctor));
     }
 
     @PutMapping("/{id}")

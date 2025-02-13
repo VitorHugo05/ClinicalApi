@@ -1,7 +1,9 @@
 package com.vitordev.clinicalapi.adapters.in.controllers;
 
+import com.vitordev.clinicalapi.adapters.in.mapper.PatientDtoMapper;
 import com.vitordev.clinicalapi.adapters.in.mapper.PatientMapper;
 import com.vitordev.clinicalapi.adapters.in.requests.PatientRequest;
+import com.vitordev.clinicalapi.adapters.in.response.PatientDTO;
 import com.vitordev.clinicalapi.application.core.domain.Patient;
 import com.vitordev.clinicalapi.application.ports.in.patient.DeletePatientByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInputPort;
@@ -29,6 +31,9 @@ public class PatientController {
     @Autowired
     private DeletePatientByIdInputPort deletePatientByIdInputPort;
 
+    @Autowired
+    private PatientDtoMapper patientDtoMapper;
+
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody PatientRequest patientRequest) {
         var patient = patientMapper.toPatient(patientRequest);
@@ -37,9 +42,9 @@ public class PatientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> findById(@PathVariable Long id) {
+    public ResponseEntity<PatientDTO> findById(@PathVariable Long id) {
         var patient = findPatientByIdInputPort.find(id);
-        return ResponseEntity.ok().body(patient);
+        return ResponseEntity.ok().body(patientDtoMapper.toDTO(patient));
     }
 
     @PutMapping("/{id}")

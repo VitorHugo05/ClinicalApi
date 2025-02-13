@@ -1,6 +1,7 @@
 package com.vitordev.clinicalapi.adapters.out.patient.repository.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.entity.ConsultationEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -21,5 +22,5 @@ public class PatientEntity {
 
     @OneToMany(mappedBy = "patient")
     @JsonBackReference
-    private List<ConsultationEntity> consultation = new ArrayList<>();
+    private List<ConsultationEntity> consultations = new ArrayList<>();
 }

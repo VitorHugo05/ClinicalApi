@@ -10,5 +10,7 @@ import org.mapstruct.Mapping;
 public interface DoctorEntityMapper {
     @Mapping(target = "consultations", ignore = true)
     DoctorEntity toDoctorEntity(Doctor doctor);
-    Doctor toDoctor (DoctorEntity doctorEntity);
+
+    @Mapping(target = "consultations", ignore = true)
+    Doctor toDoctor(DoctorEntity doctorEntity);
 }

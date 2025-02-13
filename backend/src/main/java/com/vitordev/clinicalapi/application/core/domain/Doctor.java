@@ -1,5 +1,6 @@
 package com.vitordev.clinicalapi.application.core.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Doctor {
@@ -8,7 +9,7 @@ public class Doctor {
     private String email;
     private String phone;
     private String specialty;
-    private List<Consultation> consultations;
+    private List<Consultation> consultations = new ArrayList<>();
 
     public Doctor() {}
 
