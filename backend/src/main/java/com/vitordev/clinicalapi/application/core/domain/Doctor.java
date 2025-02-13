@@ -1,5 +1,7 @@
 package com.vitordev.clinicalapi.application.core.domain;
 
+import com.vitordev.clinicalapi.infra.security.UserRole;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +11,35 @@ public class Doctor {
     private String email;
     private String phone;
     private String specialty;
+    private String password;
+    private UserRole role;
     private List<Consultation> consultations = new ArrayList<>();
 
-    public Doctor() {}
+    public Doctor() {
+        this.role = UserRole.DOCTOR;
+    }
 
-    public Doctor(Long id, String name, String email, String phone, String specialty, List<Consultation> consultations) {
+    public Doctor(Long id, String name, String email, String phone, String specialty, String password, UserRole role, List<Consultation> consultations) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.specialty = specialty;
+        this.password = password;
+        this.role = UserRole.DOCTOR;
         this.consultations = consultations;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Long getId() {

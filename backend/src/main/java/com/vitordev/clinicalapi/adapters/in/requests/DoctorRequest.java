@@ -16,4 +16,7 @@ public class DoctorRequest {
 
     @NotBlank
     private String specialty;
+
+    @NotBlank
+    private String password;
 }

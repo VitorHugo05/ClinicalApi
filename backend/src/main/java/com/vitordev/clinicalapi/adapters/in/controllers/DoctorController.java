@@ -7,7 +7,6 @@ import com.vitordev.clinicalapi.adapters.in.response.DoctorDTO;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
 import com.vitordev.clinicalapi.application.ports.in.doctor.DeleteDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
-import com.vitordev.clinicalapi.application.ports.in.doctor.InsertDoctorInputPort;
 import com.vitordev.clinicalapi.application.ports.in.doctor.UpdateDoctorInputPort;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +24,6 @@ public class DoctorController {
     private DoctorDtoMapper doctorDtoMapper;
 
     @Autowired
-    private InsertDoctorInputPort insertDoctorInputPort;
-
-    @Autowired
     private FindDoctorByIdInputPort findDoctorByIdInputPort;
 
     @Autowired
@@ -35,13 +31,6 @@ public class DoctorController {
 
     @Autowired
     DeleteDoctorByIdInputPort deleteDoctorByIdInputPort;
-
-    @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody @Valid DoctorRequest doctorRequest) {
-        Doctor doctor = doctorMapper.toDoctor(doctorRequest);
-        insertDoctorInputPort.insert(doctor);
-        return ResponseEntity.ok().build();
-    }
 
     @GetMapping("/{id}")
     public ResponseEntity<DoctorDTO> findById(@PathVariable Long id) {
