@@ -1,7 +1,7 @@
 api:
   security:
     token:
-      secret: "secret"
+      secret: ${API_SECURITY_TOKEN_SECRET:default_value}
 
 spring:
   application:

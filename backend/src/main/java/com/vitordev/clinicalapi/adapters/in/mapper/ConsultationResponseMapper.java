@@ -11,10 +11,13 @@ public interface ConsultationResponseMapper {
     @Mapping(source = "doctor", target = "doctor")
     @Mapping(source = "patient", target = "patient")
     @Mapping(source = "date", target = "date")
+    @Mapping(source = "id", target = "id")
     ConsultationResponse toResponse(Consultation consultation);
 
     @Mapping(target = "doctor", ignore = true)
     @Mapping(target = "patient", ignore = true)
     @Mapping(target = "status", ignore = true)
+    @Mapping(target = "id", ignore = true)
     Consultation toConsultation(ConsultationRequest consultationRequest);
 }
+

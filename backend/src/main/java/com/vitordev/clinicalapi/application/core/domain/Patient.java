@@ -11,7 +11,7 @@ public class Patient {
     private String email;
     private String phone;
     private String password;
-    private final UserRole role;
+    private UserRole role;
     private List<Consultation> consultations = new ArrayList<>();
 
     public Patient() {

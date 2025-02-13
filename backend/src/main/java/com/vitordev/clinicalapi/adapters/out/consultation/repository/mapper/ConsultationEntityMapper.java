@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {DoctorEntityMapper.class, PatientEntityMapper.class})
 public interface ConsultationEntityMapper {
-
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "doctor", target = "doctor")
     @Mapping(source = "patient", target = "patient")
     @Mapping(source = "date", target = "date")
@@ -17,3 +17,4 @@ public interface ConsultationEntityMapper {
 
     ConsultationEntity toConsultationEntity(Consultation consultation);
 }
+
