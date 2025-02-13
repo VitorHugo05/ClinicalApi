@@ -1,6 +1,7 @@
 package com.vitordev.clinicalapi.application.core.usecase.consultation;
 
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
+import com.vitordev.clinicalapi.application.core.domain.exceptions.ObjectNotFoundException;
 import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByPatientIdInputPort;
 import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultationsByPatientIdOutputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInputPort;
@@ -23,6 +24,6 @@ public class FindConsultationsByPatientIdUseCase implements FindConsultationsByP
     public List<Consultation> find(Long id) {
         findPatientByIdInputPort.find(id);
         return findConsultationsByPatientIdOutputPort.find(id)
-                .orElseThrow(() -> new RuntimeException("Doctor not found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Consultation not found"));
     }
 }

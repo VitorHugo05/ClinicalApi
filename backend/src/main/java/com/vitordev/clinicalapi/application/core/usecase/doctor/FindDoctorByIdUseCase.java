@@ -1,6 +1,7 @@
 package com.vitordev.clinicalapi.application.core.usecase.doctor;
 
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
+import com.vitordev.clinicalapi.application.core.domain.exceptions.ObjectNotFoundException;
 import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.out.doctor.FindDoctorByIdOutputPort;
 
@@ -13,6 +14,6 @@ public class FindDoctorByIdUseCase implements FindDoctorByIdInputPort {
 
     @Override
     public Doctor find(Long id) {
-        return findDoctorByIdOutputPort.find(id).orElseThrow(() -> new RuntimeException("Doctor not found"));
+        return findDoctorByIdOutputPort.find(id).orElseThrow(() -> new ObjectNotFoundException("Doctor not found"));
     }
 }

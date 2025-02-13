@@ -8,6 +8,8 @@ import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultat
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class FindConsultationByIdAdapter implements FindConsultationByIdOutputPort {
     @Autowired
@@ -17,10 +19,9 @@ public class FindConsultationByIdAdapter implements FindConsultationByIdOutputPo
     private ConsultationEntityMapper consultationEntityMapper;
 
     @Override
-    public Consultation find(Long id) {
-        ConsultationEntity consultationEntity = consultationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Consult not found"));
+    public Optional<Consultation> find(Long id) {
+        var consultationEntity = consultationRepository.findById(id);
 
-        return consultationEntityMapper.toConsultation(consultationEntity);
+        return consultationEntity.map(x -> consultationEntityMapper.toConsultation(x));
     }
 }

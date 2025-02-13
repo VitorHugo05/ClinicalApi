@@ -2,6 +2,8 @@ package com.vitordev.clinicalapi.application.ports.out.consultation;
 
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
 
+import java.util.Optional;
+
 public interface FindConsultationByIdOutputPort {
-    Consultation find(Long id);
+    Optional<Consultation> find(Long id);
 }
