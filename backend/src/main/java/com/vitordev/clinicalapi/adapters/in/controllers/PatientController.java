@@ -9,6 +9,7 @@ import com.vitordev.clinicalapi.application.ports.in.patient.DeletePatientByIdIn
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.InsertPatientInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.UpdatePatientInputPort;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class PatientController {
     private PatientDtoMapper patientDtoMapper;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody PatientRequest patientRequest) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid PatientRequest patientRequest) {
         var patient = patientMapper.toPatient(patientRequest);
         insertPatientInputPort.insert(patient);
         return ResponseEntity.ok().build();
@@ -48,7 +49,7 @@ public class PatientController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody PatientRequest patientRequest) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid PatientRequest patientRequest) {
         var patient = patientMapper.toPatient(patientRequest);
         patient.setId(id);
         updatePatientInputPort.update(patient);

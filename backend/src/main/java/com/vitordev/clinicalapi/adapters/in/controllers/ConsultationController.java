@@ -12,8 +12,10 @@ import com.vitordev.clinicalapi.application.core.domain.enums.StatusConsultation
 import com.vitordev.clinicalapi.application.ports.in.consultation.*;
 import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByNameInputPort;
 import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByNameInputPort;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -57,7 +59,7 @@ public class ConsultationController {
     private ConsultationUpdateMapper consultationUpdateMapper;
 
     @GetMapping("/doctor/{id}")
-    public ResponseEntity<List<ConsultationResponse>> findByDoctor(@PathVariable Long id) {
+    public ResponseEntity<List<ConsultationResponse>> findByDoctor( @PathVariable Long id) {
         List<Consultation> consultationList = findConsultationsByDoctorIdInputPort.find(id);
         List<ConsultationResponse> consultationResponseList = consultationList.stream()
                 .map(x -> consultationResponseMapper.toResponse(x)).toList();
@@ -104,7 +106,7 @@ public class ConsultationController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody ConsultationRequest consultationRequest) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid ConsultationRequest consultationRequest) {
         Consultation consultation = consultationResponseMapper.toConsultation(consultationRequest);
 
         Doctor doctor = findDoctorByNameInputPort.find(consultationRequest.getDoctor().getName());
@@ -119,7 +121,7 @@ public class ConsultationController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody ConsultationUpdateRequest consultationRequest) {
+    public ResponseEntity<Void> update(@PathVariable Long id, @RequestBody @Valid ConsultationUpdateRequest consultationRequest) {
         Consultation oldConsultation = findConsultationByIdInputPort.find(id);
         Consultation consultation = consultationUpdateMapper.toConsultation(consultationRequest);
 
