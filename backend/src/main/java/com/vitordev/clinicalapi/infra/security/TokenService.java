@@ -4,39 +4,24 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.vitordev.clinicalapi.adapters.out.doctor.repository.entity.DoctorEntity;
-import com.vitordev.clinicalapi.adapters.out.patient.repository.entity.PatientEntity;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-@Component
+@Service
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
-
-    public String generateDoctorToken(DoctorEntity doctor) {
+    public String generateToken(UserEntity user) {
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("clinical-api")
-                    .withSubject(doctor.getId().toString())
-                    .withExpiresAt(generateExpirationTime())
-                    .sign(algorithm);
-        } catch (JWTCreationException e){
-            throw new RuntimeException("Error while generating token", e);
-        }
-    }
-
-    public String generatePatientToken(PatientEntity doctor) {
-        try{
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create()
-                    .withIssuer("clinical-api")
-                    .withSubject(doctor.getId().toString())
+                    .withSubject(user.getId().toString())
+                    .withClaim("role", user.getUserRole().getRole())
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
         } catch (JWTCreationException e){

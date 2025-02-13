@@ -8,15 +8,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "tb_doctor")
+@ToString(exclude = "consultations")
 public class DoctorEntity extends UserEntity {
     private String specialty;
 
@@ -26,5 +26,18 @@ public class DoctorEntity extends UserEntity {
 
     public DoctorEntity() {
         setUserRole(UserRole.DOCTOR);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DoctorEntity that = (DoctorEntity) o;
+        return getId() != null && getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

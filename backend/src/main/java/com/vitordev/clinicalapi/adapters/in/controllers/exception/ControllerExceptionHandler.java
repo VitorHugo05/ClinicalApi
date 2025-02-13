@@ -1,5 +1,6 @@
 package com.vitordev.clinicalapi.adapters.in.controllers.exception;
 
+import com.vitordev.clinicalapi.application.core.domain.exceptions.AccessDeniedException;
 import com.vitordev.clinicalapi.application.core.domain.exceptions.DataAlreadyExistException;
 import com.vitordev.clinicalapi.application.core.domain.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,4 +28,10 @@ public class ControllerExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<StandardError> accessDenied(AccessDeniedException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.FORBIDDEN;
+        StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Forbidden access", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
 }
