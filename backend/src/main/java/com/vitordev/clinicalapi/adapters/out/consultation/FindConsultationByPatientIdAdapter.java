@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class FindConsultationByPatientIdAdapter implements FindConsultationsByPatientIdOutputPort {
@@ -20,10 +21,10 @@ public class FindConsultationByPatientIdAdapter implements FindConsultationsByPa
     private ConsultationEntityMapper consultationEntityMapper;
 
     @Override
-    public List<Consultation> find(Long id) {
-        List<ConsultationEntity> consultationEntities = consultationRepository
-                .findByPatientId(id).orElseThrow(() -> new RuntimeException("Consultation not found"));
-        return consultationEntities.stream()
-                .map(x ->consultationEntityMapper.toConsultation(x)).toList();
+    public Optional<List<Consultation>> find(Long id) {
+        return consultationRepository.findByPatientId(id)
+                .map(consultationEntities -> consultationEntities.stream()
+                        .map(consultationEntityMapper::toConsultation)
+                        .toList());
     }
 }

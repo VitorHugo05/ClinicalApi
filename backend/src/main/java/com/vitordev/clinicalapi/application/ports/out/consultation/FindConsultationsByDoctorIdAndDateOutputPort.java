@@ -4,7 +4,8 @@ import com.vitordev.clinicalapi.application.core.domain.Consultation;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface FindConsultationsByDoctorIdAndDateOutputPort {
-   List<Consultation> find(Long id, LocalDate date);
+   Optional<List<Consultation>> find(Long id, LocalDate date);
 }

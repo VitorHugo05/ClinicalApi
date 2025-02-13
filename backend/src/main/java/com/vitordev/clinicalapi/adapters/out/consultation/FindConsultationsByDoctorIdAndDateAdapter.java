@@ -1,7 +1,6 @@
 package com.vitordev.clinicalapi.adapters.out.consultation;
 
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.ConsultationRepository;
-import com.vitordev.clinicalapi.adapters.out.consultation.repository.entity.ConsultationEntity;
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.mapper.ConsultationEntityMapper;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
 import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultationsByDoctorIdAndDateOutputPort;
@@ -9,12 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Component
-public class FindConsultationByDoctorIdAndDateAdapter implements FindConsultationsByDoctorIdAndDateOutputPort {
+public class FindConsultationsByDoctorIdAndDateAdapter implements FindConsultationsByDoctorIdAndDateOutputPort {
     @Autowired
     private ConsultationRepository consultationRepository;
 
@@ -22,12 +20,10 @@ public class FindConsultationByDoctorIdAndDateAdapter implements FindConsultatio
     private ConsultationEntityMapper consultationEntityMapper;
 
     @Override
-    public List<Consultation> find(Long id, LocalDate date) {
-        List<ConsultationEntity> consultationEntityList = consultationRepository.findByDoctorIdAndDateEquals(id, date)
-                .orElseThrow(() -> new RuntimeException("Consultation not found"));
-
-        return consultationEntityList.stream()
-                .map(x -> consultationEntityMapper.toConsultation(x))
-                .toList();
+    public Optional<List<Consultation>> find(Long id, LocalDate date) {
+        return consultationRepository.findByDoctorIdAndDateEquals(id, date)
+                .map(consultationEntities -> consultationEntities.stream()
+                        .map(consultationEntityMapper::toConsultation)
+                        .toList());
     }
 }

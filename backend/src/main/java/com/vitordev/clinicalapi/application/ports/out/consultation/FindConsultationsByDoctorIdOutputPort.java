@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FindConsultationsByDoctorIdOutputPort {
-   List<Consultation> find(Long id);
+   Optional<List<Consultation>> find(Long id);
 }

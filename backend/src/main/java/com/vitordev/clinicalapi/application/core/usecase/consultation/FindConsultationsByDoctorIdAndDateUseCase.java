@@ -8,11 +8,11 @@ import com.vitordev.clinicalapi.application.ports.out.consultation.FindConsultat
 import java.time.LocalDate;
 import java.util.List;
 
-public class FindConsultationByDoctorIdAndDateUseCase implements FindConsultationsByDoctorIdAndDateInputPort {
+public class FindConsultationsByDoctorIdAndDateUseCase implements FindConsultationsByDoctorIdAndDateInputPort {
     private final FindConsultationsByDoctorIdAndDateOutputPort findConsultationsByDoctorIdAndDateOutputPort;
     private final FindDoctorByIdInputPort findDoctorByIdInputPort;
 
-    public FindConsultationByDoctorIdAndDateUseCase(
+    public FindConsultationsByDoctorIdAndDateUseCase(
             FindConsultationsByDoctorIdAndDateOutputPort findConsultationsByDoctorIdAndDateOutputPort,
             FindDoctorByIdInputPort findDoctorByIdInputPort
     ) {
@@ -23,6 +23,7 @@ public class FindConsultationByDoctorIdAndDateUseCase implements FindConsultatio
     @Override
     public List<Consultation> find(Long id, LocalDate date) {
         findDoctorByIdInputPort.find(id);
-        return findConsultationsByDoctorIdAndDateOutputPort.find(id, date);
+        return findConsultationsByDoctorIdAndDateOutputPort.find(id, date)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
 }

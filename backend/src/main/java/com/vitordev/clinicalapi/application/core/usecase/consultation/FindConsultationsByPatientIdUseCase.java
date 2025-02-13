@@ -7,11 +7,11 @@ import com.vitordev.clinicalapi.application.ports.in.patient.FindPatientByIdInpu
 
 import java.util.List;
 
-public class FindConsultationByPatientIdUseCase implements FindConsultationsByPatientIdInputPort {
+public class FindConsultationsByPatientIdUseCase implements FindConsultationsByPatientIdInputPort {
     private final FindConsultationsByPatientIdOutputPort findConsultationsByPatientIdOutputPort;
     private final FindPatientByIdInputPort findPatientByIdInputPort;
 
-    public FindConsultationByPatientIdUseCase(
+    public FindConsultationsByPatientIdUseCase(
             FindConsultationsByPatientIdOutputPort findConsultationsByPatientIdOutputPort,
             FindPatientByIdInputPort findPatientByIdInputPort
     ) {
@@ -22,6 +22,7 @@ public class FindConsultationByPatientIdUseCase implements FindConsultationsByPa
     @Override
     public List<Consultation> find(Long id) {
         findPatientByIdInputPort.find(id);
-        return findConsultationsByPatientIdOutputPort.find(id);
+        return findConsultationsByPatientIdOutputPort.find(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found"));
     }
 }
