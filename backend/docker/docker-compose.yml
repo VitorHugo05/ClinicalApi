@@ -9,6 +9,7 @@ services:
       - db-data:/data
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - API_SECURITY_TOKEN_SECRET=${API_SECURITY_TOKEN_SECRET}
     depends_on:
       - h2-database
 
