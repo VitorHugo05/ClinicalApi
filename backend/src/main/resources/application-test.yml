@@ -1,19 +1,9 @@
-api:
-  security:
-    token:
-      secret: ${API_SECURITY_TOKEN_SECRET:default_value}
-
 spring:
-  application:
-    name: ClinicalApi
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     driver-class-name: org.h2.Driver
     username: sa
     password: password
-  sql:
-    init:
-      mode: always
 
   jpa:
     hibernate:
@@ -24,7 +14,6 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
 
-
-  h2:
-    console:
-      enabled: true
+  sql:
+    init:
+      mode: never

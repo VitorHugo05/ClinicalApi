@@ -5,7 +5,7 @@ INSERT INTO tb_doctor (name, email, phone, specialty, password, user_role) VALUE
 ('Ana Costa', 'ana.costa@email.com', '11993456789', 'Pediatria', '$2a$10$Ae7KOSvIz33god8OYa/mZOlYR3GqBROEdh1j5wAjd4ZWpkbJMjRDe', 'DOCTOR');
 
 INSERT INTO tb_patient (name, email, phone, password, user_role) VALUES
-('Carlos Souza', 'carlos.souza@email.com', '11987654321', '$2a$12$5QEp/U0RK3o0O96yv5cGVePGMeuNYkaGVZg/KHd0z.7Wkg0WNNo/u', 'PATIENT'),
+('Carlos Souza', 'carlos.souza@email.com', '11987654321', 'as', 'ADMIN'),
 ('Mariana Lima', 'mariana.lima@email.com', '11998765432', '$2a$12$qlGjXQUf3sVrxOi.lnMX0.uhllskD.ZfWH.KTHOJaB4p6Ah5tiZni', 'PATIENT'),
 ('Roberto Alves', 'roberto.alves@email.com', '11991234567', '$2a$12$FMD7u4XGXp8zg7rRj/TveeeSB.G9MirWMU6dixZDq9FjnUwp9pNI.', 'PATIENT'),
 ('Fernanda Castro', 'fernanda.castro@email.com', '11993456789', '$2a$12$EATr1IfhteUM1IIJzW8rVu.asGhbuiEcAIvtC3RACFaJjZrJRVOg6', 'PATIENT');

@@ -1,0 +1,26 @@
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - db-data:/data
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - h2-database
+
+  h2-database:
+    image: oscarfonts/h2
+    ports:
+      - "1521:1521"
+      - "8082:8082"
+    volumes:
+      - db-data:/opt/h2-data
+    environment:
+      - H2_OPTIONS=-webAllowOthers -tcpAllowOthers -ifNotExists
+
+volumes:
+  db-data:
