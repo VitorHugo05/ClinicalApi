@@ -52,7 +52,7 @@ Isso iniciará a aplicação e o banco de dados H2.
 
 🔑 Passando Variáveis de Ambiente na Linha de Comando
 
-Se desejar definir a variável API_SECURITY_TOKEN_SECRET ao iniciar o Docker, utilize um dos seguintes métodos:
+Se desejar definir a variável API_SECURITY_TOKEN_SECRET ao iniciar o Docker, utilize um dos seguintes métodos (Caso opte por não colocar, o spring ira colocar uma default fazendo assim a aplicação funcionar normalmente):
 
 Linux/macOS:
 
