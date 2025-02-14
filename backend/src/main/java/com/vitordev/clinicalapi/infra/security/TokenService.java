@@ -15,19 +15,21 @@ import java.time.ZoneOffset;
 public class TokenService {
     @Value("${api.security.token.secret}")
     private String secret;
+
     public String generateToken(UserEntity user) {
-        try{
+        try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.create()
                     .withIssuer("clinical-api")
                     .withSubject(user.getId().toString())
-                    .withClaim("role", user.getUserRole().getRole())
+                    .withClaim("role", "ROLE_" + user.getUserRole().name())
                     .withExpiresAt(generateExpirationTime())
                     .sign(algorithm);
-        } catch (JWTCreationException e){
+        } catch (JWTCreationException e) {
             throw new RuntimeException("Error while generating token", e);
         }
     }
+
 
     public String verifyToken(String token) {
         try{

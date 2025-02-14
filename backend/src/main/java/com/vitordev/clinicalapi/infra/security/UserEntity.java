@@ -29,10 +29,11 @@ public abstract class UserEntity implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return switch (userRole) {
-            case ADMIN -> List.of(new SimpleGrantedAuthority("ADMIN"));
-            case DOCTOR -> List.of(new SimpleGrantedAuthority("DOCTOR"));
-            case PATIENT -> List.of(new SimpleGrantedAuthority("PATIENT"));
+            case ADMIN -> List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            case DOCTOR -> List.of(new SimpleGrantedAuthority("ROLE_DOCTOR"));
+            case PATIENT -> List.of(new SimpleGrantedAuthority("ROLE_PATIENT"));
         };
+
     }
 
     @Override

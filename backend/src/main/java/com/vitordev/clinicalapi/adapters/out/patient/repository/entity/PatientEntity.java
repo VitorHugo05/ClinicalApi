@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.vitordev.clinicalapi.adapters.out.consultation.repository.entity.ConsultationEntity;
 import com.vitordev.clinicalapi.infra.security.UserEntity;
 import com.vitordev.clinicalapi.infra.security.UserRole;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -18,7 +19,7 @@ import java.util.List;
 @Table(name = "tb_patient")
 @ToString(exclude = "consultations")
 public class PatientEntity extends UserEntity {
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private List<ConsultationEntity> consultations = new ArrayList<>();
 

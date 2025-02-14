@@ -3,6 +3,7 @@ package com.vitordev.clinicalapi.application.core.usecase.consultation;
 import com.vitordev.clinicalapi.application.core.domain.Consultation;
 import com.vitordev.clinicalapi.application.core.domain.Doctor;
 import com.vitordev.clinicalapi.application.core.domain.Patient;
+import com.vitordev.clinicalapi.application.core.domain.exceptions.IllegalInputException;
 import com.vitordev.clinicalapi.application.ports.in.consultation.FindConsultationsByDoctorIdAndDateInputPort;
 import com.vitordev.clinicalapi.application.ports.in.consultation.InsertConsultationInputPort;
 import com.vitordev.clinicalapi.application.ports.in.doctor.FindDoctorByIdInputPort;
@@ -12,6 +13,7 @@ import com.vitordev.clinicalapi.application.ports.out.doctor.InsertDoctorOutputP
 import com.vitordev.clinicalapi.application.ports.out.patient.InsertPatientOutputPort;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -42,15 +44,19 @@ public class InsertConsultationUseCase implements InsertConsultationInputPort {
     @Override
     public void insert(Consultation consultation) {
         if (consultation.getStartAt() == null || consultation.getEndAt() == null) {
-            throw new RuntimeException("Os campos 'startAt' e 'endAt' não podem ser nulos.");
+            throw new IllegalInputException("Os campos 'startAt' e 'endAt' não podem ser nulos.");
         }
 
         if (consultation.getStartAt().isAfter(consultation.getEndAt())) {
-            throw new RuntimeException("O horário de início não pode ser maior que o de término.");
+            throw new IllegalInputException("O horário de início não pode ser maior que o de término.");
         }
 
         if (Duration.between(consultation.getStartAt(), consultation.getEndAt()).toMinutes() < 30) {
-            throw new RuntimeException("A consulta deve ter no mínimo 30 minutos.");
+            throw new IllegalInputException("A consulta deve ter no mínimo 30 minutos.");
+        }
+
+        if(consultation.getDate().isBefore(LocalDate.now())) {
+            throw new IllegalInputException("A consulta não pode ser no passado");
         }
 
         List<Consultation> consultationList = findConsultationsByDoctorIdAndDateInputPort
@@ -65,7 +71,7 @@ public class InsertConsultationUseCase implements InsertConsultationInputPort {
                 ));
 
         if (hasConflict) {
-            throw new RuntimeException("O médico já possui uma consulta agendada neste horário.");
+            throw new IllegalInputException("O médico já possui uma consulta agendada neste horário.");
         }
         
         insertConsultationOutputPort.insert(consultation);

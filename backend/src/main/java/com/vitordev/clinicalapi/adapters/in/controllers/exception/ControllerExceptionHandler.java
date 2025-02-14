@@ -2,6 +2,7 @@ package com.vitordev.clinicalapi.adapters.in.controllers.exception;
 
 import com.vitordev.clinicalapi.application.core.domain.exceptions.AccessDeniedException;
 import com.vitordev.clinicalapi.application.core.domain.exceptions.DataAlreadyExistException;
+import com.vitordev.clinicalapi.application.core.domain.exceptions.IllegalInputException;
 import com.vitordev.clinicalapi.application.core.domain.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -32,6 +33,13 @@ public class ControllerExceptionHandler {
     public ResponseEntity<StandardError> accessDenied(AccessDeniedException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.FORBIDDEN;
         StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Forbidden access", e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(status).body(err);
+    }
+
+    @ExceptionHandler(IllegalInputException.class)
+    public ResponseEntity<StandardError> illegalException(AccessDeniedException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(System.currentTimeMillis(), status.value(), "Illegal argument", e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 }

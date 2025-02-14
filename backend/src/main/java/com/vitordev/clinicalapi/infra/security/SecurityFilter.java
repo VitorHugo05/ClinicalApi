@@ -53,10 +53,16 @@ public class SecurityFilter extends OncePerRequestFilter {
                         .map(GrantedAuthority::getAuthority)
                         .orElseThrow(() -> new AccessDeniedException("User has no valid role"));
 
-                if ("DOCTOR".equals(userRole) || "PATIENT".equals(userRole) || "ADMIN".equals(userRole)) {
+                System.out.println("User authenticated: " + user.getUsername());
+                System.out.println("User role: " + userRole);
+                System.out.println("Authorities: " + user.getAuthorities());
+                System.out.println("Security Context Authentication: " + SecurityContextHolder.getContext().getAuthentication());
+
+                if ("ROLE_DOCTOR".equals(userRole) || "ROLE_PATIENT".equals(userRole) || "ROLE_ADMIN".equals(userRole)) {
                     var auth = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                     SecurityContextHolder.getContext().setAuthentication(auth);
-                } else {
+                }
+                else {
                     throw new AccessDeniedException("Invalid user role");
                 }
             }
