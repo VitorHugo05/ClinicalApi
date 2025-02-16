@@ -136,7 +136,7 @@ Ports (Interfaces de Entrada e Saída): Define contratos para comunicação entr
     │  │  │           │  │     └── patient
     │  │  │           │  └── ports
     │  │  │           │     ├── in
-    │  │  │           │     │  ├── consultationjavajava
+    │  │  │           │     │  ├── consultation
     │  │  │           │     │  ├── doctor
     │  │  │           │     │  └── patient
     │  │  │           │     └── out
