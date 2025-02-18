@@ -12,8 +12,6 @@
 
 - Spring Boot (Spring Web, Spring Data JPA, Spring Security)
 
-- PostgreSQL
-
 - Docker e Docker Compose
 
 - JWT (Autenticação)
